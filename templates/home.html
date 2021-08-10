@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>CENTER</h1>
+<ul>
+    {% for center in object_list %}
+
+        <li class="nav-item"><a href="{% url 'registration'  %}">{{ center.name }}</a></li>
+    {% empty %}
+        <li>No articles yet.</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

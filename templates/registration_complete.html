@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+    <h1>Registration Card</h1>
+
+    <p> NID      : {{ object.nid }}</p>
+    <p> Center   :{{ object.center.name }}</p>
+    <p> Date     :{{ object.period.date }}</p>
+    <p> Slot     :{{ object.period.slot }}</p>
+    <p> Duration :{{ object.period.sttime }}-{{ object.period.etime }}</p>
+
+
+{#    {%  if d1 %}#}
+{#    {{ d1.nid }}#}
+{#    {% endif %}#}
+
+{% endblock content %}
