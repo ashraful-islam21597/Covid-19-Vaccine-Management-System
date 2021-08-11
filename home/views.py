@@ -1,6 +1,6 @@
 import math
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
@@ -59,97 +59,52 @@ class complete(DetailView):
 def registration(request):
     obj=center_name.objects.all()
     obj_period=period_of_dosses.objects.all()
-
     if 'submit' in request.POST:
+        u=""
+        starttime = datetime.time(00, 00, 00)
+        endtime = datetime.time(00, 00, 00)
         nid = request.POST['nid']
         center=request.POST['center']
         c=center_name.objects.get(name=center)
+        x1=(c.updated_dosses//c.doss_per_day)-(math.ceil(c.available_dosses/c.doss_per_day))
         if 0<c.num_of_dosses<=2:
             starttime = datetime.time(12, 00, 00)
             endtime = datetime.time(13, 00, 00)
-            x1=(c.updated_dosses//c.doss_per_day)-(math.ceil(c.available_dosses/c.doss_per_day))
-            p=period_of_dosses(slot="D",start_time=starttime,end_time=endtime,date=c.working_time+datetime.timedelta(days=x1))
-            p.save()
-            p.center_name.add(c)
-            p.num_user+=1
-            p.save()
-            c.num_of_dosses-=1
-            c.save()
-            if c.num_of_dosses==0 and c.available_dosses>=c.doss_per_day:
-                c.num_of_dosses=c.doss_per_day
-                c.save()
-
-            d=user(nid=nid,center_id=c.id,period_id=p.id)
-            d.save()
-            c.available_dosses-=1
-            c.save()
-            d1=user.objects.get(nid=nid)
-            print(d1)
-            #return redirect('/welcome/',{'d1':d1})
-            #return render(request,"congratulation.html",{'d1':d1})
-            return HttpResponseRedirect(reverse('complete', args=(d1.pk,)))
+            u="D"
         elif 4>=c.num_of_dosses>2:
             starttime = datetime.time(11, 00, 00)
             endtime = datetime.time(12, 00, 00)
-            x1=(c.updated_dosses//c.doss_per_day)-(math.ceil(c.available_dosses/c.doss_per_day))
-            p=period_of_dosses(slot="C",start_time=starttime,end_time=endtime,date=c.working_time+datetime.timedelta(days=x1))
-            p.save()
-            p.center_name.add(c)
-            p.num_user+=1
-            p.save()
-            c.num_of_dosses-=1
-            c.save()
-            d=user(nid=nid,center_id=c.id,period_id=p.id)
-            d.save()
-            c.available_dosses-=1
-            c.save()
-            d1=user.objects.get(nid=nid)
-            print(d1)
-            #return redirect('/welcome/',{'d1':d1,})
-            #return render(request,"congratulation.html",{'d1':d1})
-            return HttpResponseRedirect(reverse('complete', args=(d1.pk,)))
+            u="C"
         elif 6>=c.num_of_dosses>4:
             starttime = datetime.time(10, 00, 00)
             endtime = datetime.time(11, 00, 00)
-            x1=(c.updated_dosses//c.doss_per_day)-(math.ceil(c.available_dosses/c.doss_per_day))
-            p=period_of_dosses(slot="B",start_time=starttime,end_time=endtime,date=c.working_time+datetime.timedelta(days=x1))
-            p.save()
-            p.center_name.add(c)
-            p.num_user+=1
-            p.save()
-            c.num_of_dosses-=1
-            c.save()
-            d=user(nid=nid,center_id=c.id,period_id=p.id)
-            d.save()
-            c.available_dosses-=1
-            c.save()
-            d1=user.objects.get(nid=nid)
-            print(d1)
-            #return redirect('/welcome/',{'d1':d1,})
-            #return render(request,"congratulation.html",{'d1':d1})
-            return HttpResponseRedirect(reverse('complete', args=(d1.pk,)))
+            u="B"
         elif c.num_of_dosses>6:
             starttime = datetime.time(9, 00, 00)
             endtime = datetime.time(10, 00, 00)
-            x1=(c.updated_dosses//c.doss_per_day)-(math.ceil(c.available_dosses/c.doss_per_day))
-            p=period_of_dosses(slot="A",start_time=starttime,end_time=endtime,date=c.working_time+datetime.timedelta(days=x1))
-            p.save()
-            p.center_name.add(c)
-            p.num_user+=1
-            p.save()
+            u="A"
+        p=period_of_dosses(slot=u,start_time=starttime,end_time=endtime,date=c.working_time+datetime.timedelta(days=x1))
+        p.save()
+        p.center_name.add(c)
+        p.num_user+=1
+        p.save()
+        try:
             c.num_of_dosses-=1
+            c.available_dosses-=1
             c.save()
             d=user(nid=nid,center_id=c.id,period_id=p.id)
             d.save()
-            c.available_dosses-=1
-            c.save()
             d1=user.objects.get(nid=d.nid)
-            #print(d.nid)
-            #return redirect('/welcome/',{'d1':d1,})
-            #return render(request,"congratulation.html",{'d1':d1})
+            if c.num_of_dosses==0 and c.available_dosses>=c.doss_per_day:
+                c.num_of_dosses=c.doss_per_day
+                c.save()
             return HttpResponseRedirect(reverse('complete', args=(d1.pk,)))
-
-
+        except:
+            p.delete()
+            c.num_of_dosses=c.num_of_dosses+1
+            c.available_dosses=c.available_dosses+1
+            c.save()
+            return HttpResponse("nid exists")
     return render(request,'registration.html',context={
         'obj':obj,
         'obj_period':obj_period
