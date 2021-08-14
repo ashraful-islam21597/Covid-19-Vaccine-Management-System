@@ -8,17 +8,17 @@ from django.views.generic import ListView, CreateView, TemplateView, DetailView
 import datetime
 
 from center.counter import counter
-from center.models import center_name, period_of_dosses
+from center.models import center_name, period_of_dosses, area
 from home.forms import registrationForm
-from user.models import user
+from citizen.models import people
 
 
 class HomeView(ListView):
-    model = center_name
+    model = area
     template_name = 'home.html'
 
 class complete(DetailView):
-    model = user
+    model = people
     template_name = "registration_complete.html"
 
 def registration(request):
@@ -32,7 +32,6 @@ def registration(request):
         if c.available_dosses==c.updated_dosses and c.updated_dosses%c.doss_per_day==1:
             c.num_of_dosses=c.doss_per_day+1
             c.save()
-        print(c.num_of_dosses)
         slot_name,start,end=counter(c.doss_per_day,c.num_of_dosses,4)
         p=period_of_dosses(slot=slot_name,start_time=start,end_time=end,date=c.working_time+datetime.timedelta(days=x1))
         p.save()
@@ -43,9 +42,9 @@ def registration(request):
             c.num_of_dosses-=1
             c.available_dosses-=1
             c.save()
-            d=user(nid=nid,center_id=c.id,period_id=p.id)
+            d=people(nid=nid,center_id=c.id,period_id=p.id)
             d.save()
-            d1=user.objects.get(nid=d.nid)
+            d1=people.objects.get(nid=d.nid)
             if c.num_of_dosses==0 and 0<c.available_dosses<=c.doss_per_day:
                 c.num_of_dosses=c.doss_per_day
                 c.save()

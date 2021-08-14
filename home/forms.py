@@ -1,9 +1,9 @@
 from django.forms import ModelForm
 
-from user.models import user
+from citizen.models import people
 
 
 class registrationForm(ModelForm):
     class Meta:
-        model = user
+        model = people
         fields = ('nid','center','period',)

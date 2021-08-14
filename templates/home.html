@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,15 +6,21 @@
     <title>Title</title>
 </head>
 <body>
-
+{% block content %}
 <h1>CENTER</h1>
 <ul>
-    {% for center in object_list %}
 
-        <li class="nav-item"><a href="{% url 'registration'  %}">{{ center.name }}</a></li>
-    {% empty %}
-        <li>No articles yet.</li>
-    {% endfor %}
+        {% for obj in object_list %}
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></li>
+
+            {% else %}
+                <li class="nav-item"><a href="{% url 'registration'  %}">{{ obj.name }}</a></li>
+
+            {% endif %}
+        {% endfor %}
+
 </ul>
+{% endblock %}
 </body>
 </html>

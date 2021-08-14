@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <h1>Area</h1>
+    <ul>
+
+{#        {% for obj in object_list %}#}
+{#            {% if user.is_authenticated %}#}
+{#                <li class="nav-item"><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></li>#}
+{#            {% endif %}#}
+{#        {% endfor %}#}
+
+    </ul>
+
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+
+            <th scope="col">Name</th>
+            <th scope="col">Population</th>
+            <th scope="col">Total Registered</th>
+            <th scope="col">1st Doss done</th>
+            <th scope="col">Total Vaccinated</th>
+            <th scope="col">Priority</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in object_list %}
+        {% if user.is_authenticated %}
+
+
+                <tr>
+
+                    <td ><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></td>
+                    <td>{{ obj.population }}</td>
+                    <td >{{ obj.total_rgistered }}</td>
+                    <td>{{ obj.doss_1st_done }}</td>
+                    <td >{{ obj.total_vaccinated }}</td>
+                    <td>{{ obj.priority }}</td>
+
+                </tr>
+            </a>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+</body>
+</html>
