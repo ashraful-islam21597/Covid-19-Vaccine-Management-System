@@ -26,7 +26,7 @@ SECRET_KEY = ')%*tsl_ub=l11l-#nv45@mv@42250m#k5au@8&4--m*piw6d6p'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
