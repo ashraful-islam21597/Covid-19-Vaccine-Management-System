@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'center',
     'citizen',
     'staff',
+    'City',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -132,6 +133,16 @@ AUTH_USER_MODEL = 'staff.user'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_CLASS_CONVERTERS = {
+    'textinput': "form-control cst__radius",
+    'urlinput': "form-control cst__radius",
+    'numberinput': "form-control cst__radius",
+    'emailinput': "form-control cst__radius",
+    'dateinput': "form-control cst__radius",
+    'textarea': "form-control cst__radius",
+    'passwordinput': "form-control cst__radius",
+    'select': "form-control cst__radius",
+}
 # EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER = config('EMAIL_HOST_USER')

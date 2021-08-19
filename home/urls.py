@@ -1,10 +1,11 @@
 from django.urls import path
 
-from home.views import HomeView,complete, registration
+from home.views import testview
+from home.views import HomeView
 
 urlpatterns=[
     path('',HomeView.as_view(),name="home"),
-    path('registration/',registration,name="registration"),
-    #path('registration/',registrationView.as_view(),name="registration"),
-    path('<int:pk>/',complete.as_view(),name="complete"),
+    path('vaccination/',testview.as_view(),name='test')
+    #path('registration/',registration,name="registration"),
+    #path('<int:pk>/',complete.as_view(),name="complete"),
 ]

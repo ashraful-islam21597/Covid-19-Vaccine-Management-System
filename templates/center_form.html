@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% crispy example_form %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,39 +9,66 @@
 </head>
 <body>
 {% block content %}
-
-
     <h1>{{ obj.name }}</h1>
     <hr>
-<div>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-success" type="submit">Submit</button>
-    </form>
-</div>
-<hr>
+    <div>
+{#        <form method='POST' action=''>#}
+{#            #}
+{#            <input type='hidden' name='csrfmiddlewaretoken'#}
+{#                   value='GLJMxnnDz1MGNFC46pjoofSlo6JMCD1IXu7X3n7LsRbQfdS38SYHJMs9IAXddcck'/>#}
+{##}
+{##}
+{#            <div id="div_id_full_name" class="form-group">#}
+{#                <label for="id_working_time" class="control-label ">#}
+{#                    working time#}
+{#                </label>#}
+{#                <div class="controls ">#}
+{#                    <input class="textinput textInput form-control" id="id_full_name" maxlength="120" name="working_time"#}
+{#                           type="date"/>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{##}
+{#            <!--    <input class='btn btn-primary' type='submit' value='Sign Up' />-->#}
+{#            <input type='submit' value='Sign Up'/>#}
+{##}
+{##}
+{#        </form>#}
+
+
+                <form class="crispy-form" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-success" type="submit">Submit</button>
+                </form>
+    </div>
+    <hr>
 
     <table class="table table-hover table-dark">
         <thead>
         <tr>
-
             <th scope="col">Center Name</th>
             <th scope="col">Updated Dosses</th>
             <th scope="col">Available Dosses</th>
             <th scope="col">Doss Per Day</th>
-
+            <th>#</th>
+            <th>#</th>
         </tr>
         </thead>
         <tbody>
         {% for i in obj.center_name_set.all %}
+
             <tr>
                 <td>{{ i.name }}</td>
-                <td >{{ i.updated_dosses }}</td>
+
+                <td>{{ i.updated_dosses }}</td>
                 <td>{{ i.available_dosses }}</td>
                 <td>{{ i.doss_per_day }}</td>
+                <td><a href="{% url 'edit_center' i.pk %}">Edit</a></td>
+                <td><a href="{% url 'delete_center' i.pk %}">Delete</a></td>
 
             </tr>
+
         {% endfor %}
 
         </tbody>

@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
@@ -9,46 +8,39 @@
 <body>
 {% block content %}
     <h1>Area</h1>
-    <ul>
+    <form method="post">
+        {% csrf_token %}
 
-{#        {% for obj in object_list %}#}
-{#            {% if user.is_authenticated %}#}
-{#                <li class="nav-item"><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></li>#}
-{#            {% endif %}#}
-{#        {% endfor %}#}
-
-    </ul>
-
+        <input name="name" placeholder="Area Name" type="text">
+        <input name="population" placeholder="Population" type="number">
+        <button class="btn btn-success" name="submit" type="submit">Submit</button>
+    </form>
     <table class="table table-hover table-dark">
         <thead>
         <tr>
-
             <th scope="col">Name</th>
             <th scope="col">Population</th>
             <th scope="col">Total Registered</th>
             <th scope="col">1st Doss done</th>
             <th scope="col">Total Vaccinated</th>
             <th scope="col">Priority</th>
+            <th scope="col">#</th>
 
         </tr>
         </thead>
         <tbody>
-        {% for obj in object_list %}
-        {% if user.is_authenticated %}
-
-
+        {% for obj in a2 %}
+            {% if user.is_authenticated %}
                 <tr>
-
-                    <td ><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></td>
+                    <td><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></td>
                     <td>{{ obj.population }}</td>
-                    <td >{{ obj.total_rgistered }}</td>
+                    <td>{{ obj.total_rgistered }}</td>
                     <td>{{ obj.doss_1st_done }}</td>
-                    <td >{{ obj.total_vaccinated }}</td>
-                    <td>{{ obj.priority }}</td>
-
+                    <td>{{ obj.total_vaccinated }}</td>
+                    <td>{{ obj.priority }}%</td>
+                    <td><a href="{% url 'delete_area' obj.pk %}">Delete</a></td>
                 </tr>
-            </a>
-        {% endif %}
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
