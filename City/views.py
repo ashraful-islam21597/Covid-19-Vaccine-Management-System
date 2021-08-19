@@ -56,15 +56,11 @@ def createarea(request):
     if 'submit' in request.POST:
         name=request.POST['name']
         population=request.POST['population']
-
         a=area(name=name,population=population)
         a.save()
-
         area1=area.objects.all()
         for i in area1:
-
             i.priority=priority(i.id)
-
             i.save()
         return redirect('/areadetails/')
     return render(request,'arealist.html',{'a2':a2})

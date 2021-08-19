@@ -25,8 +25,8 @@ def registration(request):
         center = request.POST['center']
         c = center_name.objects.get(name=center)
         x1 = (c.updated_dosses // c.doss_per_day) - (math.ceil(c.available_dosses / c.doss_per_day))
-        if x1<0:
-            x1=c.updated_dosses//c.doss_per_day
+        if x1 < 0:
+            x1 = c.updated_dosses // c.doss_per_day
         if c.available_dosses == c.updated_dosses and c.updated_dosses % c.doss_per_day == 1:
             c.num_of_dosses = c.doss_per_day + 1
             c.save()
@@ -45,22 +45,22 @@ def registration(request):
             d = people(nid=nid, center_id=c.id, period_id=p.id, registered=True, vaccinated=False, doss_1st=False,
                        doss_2nd=False)
             d.save()
-            m=area.objects.get(name=c.area_name)
+            m = area.objects.get(name=c.area_name)
 
-            m.total_rgistered+=1
+            m.total_rgistered += 1
 
             m.save()
-            area1=area.objects.all()
+            area1 = area.objects.all()
             for i in area1:
                 print(priority(i.id))
-                i.priority=priority(i.id)
+                i.priority = priority(i.id)
                 print(i.id)
                 i.save()
             print(m.name)
 
             d1 = people.objects.get(nid=d.nid)
 
-            #print(m.area_name)
+            # print(m.area_name)
 
             if c.num_of_dosses == 0 and 0 < c.available_dosses > c.doss_per_day:
                 c.num_of_dosses = c.doss_per_day
