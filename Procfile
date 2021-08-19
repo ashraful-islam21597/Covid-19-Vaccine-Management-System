@@ -1,1 +1,1 @@
-web: gunicorn vaxine.wsgi --log-file
+web: gunicorn vaxine.wsgi
