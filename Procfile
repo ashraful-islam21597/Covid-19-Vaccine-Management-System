@@ -1,1 +1,1 @@
-web: gunicorn covid_vaxine.wsgi --log-file
+web: gunicorn vaxine.wsgi --log-file
