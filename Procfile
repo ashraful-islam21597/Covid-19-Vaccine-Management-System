@@ -1,0 +1,1 @@
+web: gunicorn covid_vaxine.wsgi --log-file

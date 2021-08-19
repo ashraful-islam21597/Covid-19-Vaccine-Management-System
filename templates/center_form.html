@@ -53,12 +53,14 @@
             <th scope="col">Doss Per Day</th>
             <th>#</th>
             <th>#</th>
+            <th>#</th>
+
         </tr>
         </thead>
         <tbody>
         {% for i in obj.center_name_set.all %}
 
-            <tr>
+            <tr>{{ i.name }}
                 <td>{{ i.name }}</td>
 
                 <td>{{ i.updated_dosses }}</td>
@@ -66,6 +68,7 @@
                 <td>{{ i.doss_per_day }}</td>
                 <td><a href="{% url 'edit_center' i.pk %}">Edit</a></td>
                 <td><a href="{% url 'delete_center' i.pk %}">Delete</a></td>
+                <td><a href="{% url 'create_center_staff' i.pk %}">create staff</a></td>
 
             </tr>
 

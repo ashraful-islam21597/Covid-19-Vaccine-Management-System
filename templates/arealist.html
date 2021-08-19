@@ -25,6 +25,7 @@
             <th scope="col">Total Vaccinated</th>
             <th scope="col">Priority</th>
             <th scope="col">#</th>
+            <th scope="col">#</th>
 
         </tr>
         </thead>
@@ -39,6 +40,7 @@
                     <td>{{ obj.total_vaccinated }}</td>
                     <td>{{ obj.priority }}%</td>
                     <td><a href="{% url 'delete_area' obj.pk %}">Delete</a></td>
+
                 </tr>
             {% endif %}
         {% endfor %}
