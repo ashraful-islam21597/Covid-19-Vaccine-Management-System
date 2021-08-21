@@ -14,6 +14,8 @@ import os
 import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import City.apps
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -35,7 +37,8 @@ INSTALLED_APPS = [
     'center',
     'citizen',
     'staff',
-    'City',
+
+    'City.apps.CityConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',

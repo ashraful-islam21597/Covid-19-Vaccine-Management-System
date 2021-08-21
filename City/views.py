@@ -1,3 +1,5 @@
+from math import floor
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -5,8 +7,9 @@ from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, TemplateView
 
-from City.models import area
+from City.models import area, dosses_for_dhaka
 from City.priority import priority
+from center.models import center_name
 
 
 class arealist(ListView):
@@ -75,5 +78,40 @@ class areaDeleteView(LoginRequiredMixin, DeleteView):
     # def get_success_url(self):
     #     return reverse_lazy('create_center', kwargs={'pk': self.object.area_name_id})
     #
+def updatedoss(request):
+    if 'update' in request.POST:
+        doss=request.POST['doss']
+        d=dosses_for_dhaka(dosses=doss)
+        d.save()
+        a=area.objects.all()
+        for i in a:
+            i.pending_doss=round(float(d.dosses)*(i.priority/100))
+            i.total_doss_area=i.total_doss_area+round(float(d.dosses)*(i.priority/100))
+            i.save()
+            center=i.center_name_set.all()
+            f=i.pending_doss%i.number_of_center
+            for c in center:
+                if f!=0:
+                    c.pending_doss_center=c.pending_doss_center+round(i.pending_doss/i.number_of_center)+1
+                    f=f-1
+                else:
+                    c.pending_doss_center=c.pending_doss_center+round(i.pending_doss/i.number_of_center)
+                c.save()
+                c.total_doss_center=c.total_doss_center+c.pending_doss_center
+                c.save()
+                if c.updated_dosses==0:
+                    c.updated_dosses=c.pending_doss_center
+                    c.available_dosses=c.pending_doss_center
+                    c.doss_per_day=floor(c.pending_doss_center/7)
+                    c.num_of_dosses=floor(c.pending_doss_center/7)
+                    c.pending_doss_center=c.pending_doss_center-c.updated_dosses
+                    c.save()
+                print(c.name)
+        return HttpResponseRedirect('/')
+    else:
+        return render(request,'update_doss.html')
+
+
+
 
 

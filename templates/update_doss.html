@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,24 +9,23 @@
 <body>
 {% block content %}
     <h1>Area</h1>
+
     <form method="post">
         {% csrf_token %}
 
-        <input name="name" placeholder="Area Name" type="text">
-        <input name="population" placeholder="Population" type="number">
-        <button class="btn btn-success" name="submit" type="submit">Submit</button>
+        <input name="doss" placeholder="Update total dosses" type="number">
+        <button class="btn btn-success" name="update" type="submit">Update</button>
+
+
     </form>
-    <hr>
     <table class="table table-hover table-dark">
         <thead>
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Population</th>
-            <th scope="col">Total doss</th>
-            <th scope="col">Pending doss</th>
             <th scope="col">Total Registered</th>
-            <th scope="col">Total Vaccinate</th>
-            <th scope="col">Centers</th>
+            <th scope="col">1st Doss done</th>
+            <th scope="col">Total Vaccinated</th>
             <th scope="col">Priority</th>
             <th scope="col">#</th>
             <th scope="col">#</th>
@@ -38,11 +38,9 @@
                 <tr>
                     <td><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></td>
                     <td>{{ obj.population }}</td>
-                    <td>{{ obj.total_doss_area }}</td>
-                    <td>{{ obj.pending_doss }}</td>
                     <td>{{ obj.total_rgistered }}</td>
+                    <td>{{ obj.doss_1st_done }}</td>
                     <td>{{ obj.total_vaccinated }}</td>
-                    <td>{{ obj.number_of_center }}</td>
                     <td>{{ obj.priority }}%</td>
                     <td><a href="{% url 'delete_area' obj.pk %}">Delete</a></td>
 

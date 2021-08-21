@@ -23,6 +23,8 @@ class center_name(models.Model):
     num_of_dosses = models.IntegerField(default=0)
     updated_time = models.DateField(auto_now_add=True)
     working_time = models.DateField(auto_now_add=False)
+    pending_doss_center=models.IntegerField(default=0)
+    total_doss_center=models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

@@ -1,5 +1,6 @@
 import datetime
 import math
+from twilio.rest import Client
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -15,15 +16,26 @@ class complete(DetailView):
     model = people
     template_name = "registration_complete.html"
 
+# def get_center(request):
+#     obj = center_name.objects.all()
+#     return HttpResponseRedirect(reverse('complete', args=(d1.pk,)))
 
-def registration(request):
-    obj = center_name.objects.all()
+
+def registration(request,pk):
+    obj1 = area.objects.get(id=pk)
+    obj  = obj1.center_name_set.all()
+
     obj_period = period_of_dosses.objects.all()
 
     if 'submit' in request.POST:
         nid = request.POST['nid']
         center = request.POST['center']
         c = center_name.objects.get(name=center)
+
+        # client = Client('AC961eb8256addcabce6da96cf3ebd2b54', 'c21de0267000c910be5344ffbe85f6f4')
+        # verify = client.verify.services('1234')
+        # verify.verifications.create(to='01954773688', channel='sms')
+
         x1 = (c.updated_dosses // c.doss_per_day) - (math.ceil(c.available_dosses / c.doss_per_day))
         if x1 < 0:
             x1 = c.updated_dosses // c.doss_per_day
@@ -56,18 +68,27 @@ def registration(request):
                 i.priority = priority(i.id)
                 print(i.id)
                 i.save()
-            print(m.name)
-
             d1 = people.objects.get(nid=d.nid)
-
-            # print(m.area_name)
-
             if c.num_of_dosses == 0 and 0 < c.available_dosses > c.doss_per_day:
                 c.num_of_dosses = c.doss_per_day
                 c.save()
             elif c.num_of_dosses == 0 and 0 < c.available_dosses <= c.doss_per_day:
                 c.num_of_dosses = c.available_dosses
                 c.save()
+            elif c.available_dosses==0 and c.pending_doss_center!=0:
+                c.available_dosses=c.pending_doss_center
+                c.updated_dosses=c.pending_doss_center
+                c.pending_doss_center=c.pending_doss_center-c.updated_dosses
+                c.save()
+                if math.floor(c.updated_dosses / 7)%2==0:
+                    c.doss_per_day= math.floor(c.updated_dosses / 7)
+                else:
+                    c.doss_per_day= math.floor(c.updated_dosses / 7)+1
+
+                c.save()
+                c.num_of_dosses=c.doss_per_day
+                c.save()
+
             return HttpResponseRedirect(reverse('complete', args=(d1.pk,)))
         except:
             p.delete()

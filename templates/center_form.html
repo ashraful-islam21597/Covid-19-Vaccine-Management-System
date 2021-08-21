@@ -48,6 +48,7 @@
         <thead>
         <tr>
             <th scope="col">Center Name</th>
+            <th scope="col">Pending doss</th>
             <th scope="col">Updated Dosses</th>
             <th scope="col">Available Dosses</th>
             <th scope="col">Doss Per Day</th>
@@ -62,7 +63,7 @@
 
             <tr>{{ i.name }}
                 <td>{{ i.name }}</td>
-
+                <td>{{ i.pending_doss_center }}</td>
                 <td>{{ i.updated_dosses }}</td>
                 <td>{{ i.available_dosses }}</td>
                 <td>{{ i.doss_per_day }}</td>

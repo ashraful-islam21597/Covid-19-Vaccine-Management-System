@@ -15,7 +15,7 @@
                 <li class="nav-item"><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></li>
 
             {% else %}
-                <li class="nav-item"><a href="{% url 'registration'  %}">{{ obj.name }}</a></li>
+                <li class="nav-item"><a href="{% url 'registration' obj.pk %}">{{ obj.name }}</a></li>
 
             {% endif %}
         {% endfor %}

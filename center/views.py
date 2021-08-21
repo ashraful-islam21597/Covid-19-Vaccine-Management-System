@@ -33,6 +33,8 @@ class CreateCenter(LoginRequiredMixin, View):
             form.instance.num_of_dosses = form.instance.doss_per_day
             form.save()
             obj = area.objects.get(id=self.kwargs['pk'])
+            obj.number_of_center= obj.number_of_center+1
+            obj.save()
             return HttpResponseRedirect('/area/' + str(obj.id))
         return render(request, self.template_name, {'form': form})
 
