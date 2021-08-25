@@ -21,10 +21,3 @@ class centerform(forms.ModelForm):
         widgets = {
             'working_time': DateInput(),
         }
-
-# class centerform(forms.Form):
-#     area_name=forms.IntegerField()
-#     name = forms.CharField(required=True)
-#     updated_dosses= forms.IntegerField()
-#     doss_per_day=forms.IntegerField()
-#     working_time = forms.DateTimeField()

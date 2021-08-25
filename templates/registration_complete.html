@@ -49,7 +49,7 @@
             <td>{{ object.period.slot }}</td>
             <td>{{ object.period.second_date}}</td>
             <td>{{ object.period.sttime }} am - {{ object.period.etime }}am</td>
-            {% if object.doss_1st %}
+            {% if object.doss_1st == True %}
                 <td> Done</td>
             {% else %}
                 <td> Pending </td>
