@@ -17,44 +17,6 @@ class arealist(ListView):
     model = area
     template_name = 'arealist.html'
 
-
-# class CreateArea(CreateView):
-#     model = area
-#     template_name = 'area_form.html'
-#     fields = "__all__"
-#     success_url = '/'
-#
-#     def form_valid(self, form):
-#         return super().form_valid(form)
-#     obj=area.objects.get(name=form.instance.name)
-#     print(obj)
-
-# class CreateArea(LoginRequiredMixin,View):
-#     form_class = 'areaform'
-#     initial = {'key': 'value'}
-#     template_name = 'area_form.html'
-#     login_url = 'login'
-#     model_name=area
-#
-#     def post(self, request, *args, **kwargs):
-#         form = self.form_class(request.POST)
-#         #form.instance.author = self.request.user
-#         #form.instance.article=Article.objects.get(id=self.kwargs['pk'])
-#         if form.is_valid():
-#             form.save(self)
-#             d1=area.objects.get(name=self.form.name)
-#
-#             return HttpResponseRedirect('/')
-#             #return HttpResponseRedirect(reverse('area1', args=(d1.pk,)))
-#
-#         return render(request, self.template_name, {'form': form})
-#     def area1(self,request,*args,**kwargs):
-#         #form = self.form_class(initial=self.initial)
-#         obj=area.objects.get(id=self.kwargs['pk'])
-#         print(obj)
-#         return HttpResponseRedirect('/')
-#         #return render(request, self.template_name, {'form':form,'obj':obj})
-
 def createarea(request):
     a2=area.objects.all()
     if 'submit' in request.POST:
@@ -75,10 +37,6 @@ class areaDeleteView(LoginRequiredMixin, DeleteView):
     login_url = 'login'
     success_url = reverse_lazy('arealist')
 
-
-    # def get_success_url(self):
-    #     return reverse_lazy('create_center', kwargs={'pk': self.object.area_name_id})
-    #
 def updatedoss(request):
     if 'update' in request.POST:
         doss=request.POST['doss']
@@ -108,7 +66,7 @@ def updatedoss(request):
                         c.doss_per_day = math.floor(c.updated_dosses / 7)
                     else:
                         c.doss_per_day = math.floor(c.updated_dosses / 7) - (math.floor(c.updated_dosses / 7) % 4)
-                    #c.doss_per_day=floor(c.pending_doss_center/7)
+
                     c.save()
                     c.num_of_dosses=c.doss_per_day
                     c.pending_doss_center=c.pending_doss_center-c.updated_dosses
