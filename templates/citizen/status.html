@@ -1,15 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock title %}
 {% block content %}
-
-{#    <p> NID      : {{ object.nid }}</p>#}
-{#    <p> Center   :{{ object.center.name }}</p>#}
-{#    <p> Date     :{{ object.period.date }}</p>#}
-{#    <p> Slot     :{{ object.period.slot }}</p>#}
-{#    <p> Duration :{{ object.period.sttime }} am - {{ object.period.etime }}am</p>#}
-{#    <i style="color: red">*Please attend in the center in time</i>#}
-    <a href="{% url 'download' object.pk %}" class="btn btn-outline-primary ml-2">
-        Download</a>
     <h1 style="text-align: center">Registration Card</h1>
     <br>
     <p> NID      : {{ object.nid }}</p>
@@ -58,10 +49,5 @@
 
         </tbody>
     </table>
-
-
-{#    {%  if d1 %}#}
-{#    {{ d1.nid }}#}
-{#    {% endif %}#}
 
 {% endblock content %}

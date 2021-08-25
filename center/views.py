@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import PermissionDenied
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
@@ -33,7 +33,7 @@ class CreateCenter(LoginRequiredMixin, View):
             form.instance.num_of_dosses = form.instance.doss_per_day
             form.save()
             obj = area.objects.get(id=self.kwargs['pk'])
-            obj.number_of_center= obj.number_of_center+1
+            obj.number_of_center = obj.number_of_center + 1
             obj.save()
             return HttpResponseRedirect('/area/' + str(obj.id))
         return render(request, self.template_name, {'form': form})
@@ -47,10 +47,12 @@ class CenterDeleteView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse_lazy('create_center', kwargs={'pk': self.object.area_name_id})
 
-class CenterUpdateView(LoginRequiredMixin,UpdateView):
+
+class CenterUpdateView(LoginRequiredMixin, UpdateView):
     model = center_name
     fields = '__all__'
     template_name = 'center_edit.html'
     login_url = 'login'
+
     def get_success_url(self):
         return reverse_lazy('create_center', kwargs={'pk': self.object.area_name_id})

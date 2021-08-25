@@ -20,12 +20,26 @@
                     see stafflist</a>
                 <a href="{% url 'update_doss' %}" class="btn btn-outline-primary ml-2">
                     Update doss</a>
-            {% endif %}
 
+
+            {% elif user.is_cnter_staff %}
+                <a href="{% url 'vaccinate' %}" class="btn btn-outline-primary ml-2">
+                    Vaccinate</a>
+            {% elif user.is_area_manager %}
             <a href="{% url 'arealist' %}" class="btn btn-outline-primary ml-2">
                 Area Details</a>
 
+            {% endif %}
+
+
+
         </ul>
+        {% else %}
+
+    <a href="{% url 'check_status' %}" class="btn btn-outline-primary ml-2">
+        status</a>
+    <a href="{% url 'download' %}" class="btn btn-outline-primary ml-2">
+        Download Vaccine Card</a>
     {% endif %}
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">

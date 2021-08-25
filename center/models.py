@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # class area(models.Model):
 #     name = models.CharField(max_length=120)
 #     population = models.IntegerField(default=0)
@@ -23,8 +22,8 @@ class center_name(models.Model):
     num_of_dosses = models.IntegerField(default=0)
     updated_time = models.DateField(auto_now_add=True)
     working_time = models.DateField(auto_now_add=False)
-    pending_doss_center=models.IntegerField(default=0)
-    total_doss_center=models.IntegerField(default=0)
+    pending_doss_center = models.IntegerField(default=0)
+    total_doss_center = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -36,6 +35,7 @@ class period_of_dosses(models.Model):
     target_user = models.IntegerField(default=2)
     num_user = models.IntegerField(default=0)
     date = models.DateField(auto_now_add=False)
+    second_date = models.DateField(auto_now_add=False)
     start_time = models.TimeField(auto_now_add=False)
     end_time = models.TimeField(auto_now_add=False)
 

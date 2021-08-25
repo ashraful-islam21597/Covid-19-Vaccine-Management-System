@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'vaxine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'covid_vaxine',
+        'NAME': 'PVMS',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': 'localhost',

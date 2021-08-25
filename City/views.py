@@ -1,3 +1,4 @@
+import math
 from math import floor
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -89,7 +90,8 @@ def updatedoss(request):
             i.total_doss_area=i.total_doss_area+round(float(d.dosses)*(i.priority/100))
             i.save()
             center=i.center_name_set.all()
-            f=i.pending_doss%i.number_of_center
+            if i.number_of_center!=0:
+                f=i.pending_doss%i.number_of_center
             for c in center:
                 if f!=0:
                     c.pending_doss_center=c.pending_doss_center+round(i.pending_doss/i.number_of_center)+1
@@ -102,11 +104,16 @@ def updatedoss(request):
                 if c.updated_dosses==0:
                     c.updated_dosses=c.pending_doss_center
                     c.available_dosses=c.pending_doss_center
-                    c.doss_per_day=floor(c.pending_doss_center/7)
-                    c.num_of_dosses=floor(c.pending_doss_center/7)
+                    if math.floor(c.updated_dosses / 7) % 4 == 0:
+                        c.doss_per_day = math.floor(c.updated_dosses / 7)
+                    else:
+                        c.doss_per_day = math.floor(c.updated_dosses / 7) - (math.floor(c.updated_dosses / 7) % 4)
+                    #c.doss_per_day=floor(c.pending_doss_center/7)
+                    c.save()
+                    c.num_of_dosses=c.doss_per_day
                     c.pending_doss_center=c.pending_doss_center-c.updated_dosses
                     c.save()
-                print(c.name)
+
         return HttpResponseRedirect('/')
     else:
         return render(request,'update_doss.html')

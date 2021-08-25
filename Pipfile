@@ -11,7 +11,12 @@ psycopg2 = "==2.8.6"
 django-crispy-forms = "==1.7.2"
 gunicorn = "==19.9.0"
 django-heroku = "*"
-twilio = "*"
+reportlab = "*"
+
+xhtml2pdf = "*"
 
 [requires]
 python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

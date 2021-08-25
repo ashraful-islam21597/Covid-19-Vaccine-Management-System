@@ -8,12 +8,12 @@ from staff.models import user, center_staff
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = user
-        fields = ('Fullname','username','staff_user','is_staff','is_superuser','is_active')
+        fields = ('Fullname','username','staff_user','is_staff','is_superuser','is_active','is_area_manager')
         #fields = UserCreationForm.Meta.fields +('Profilepicture',)
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = user
-        fields = ('Fullname','username','staff_user')
+        fields = ('Fullname','username','staff_user','is_area_manager')
         #fields = UserChangeForm.Meta.fields
 
 class Center_staff_form(ModelForm):

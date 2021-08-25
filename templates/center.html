@@ -7,11 +7,16 @@
 </head>
 <body>
 {% block content %}
-    <form class="form-inline active-cyan-4">
-        <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search NID"
-               aria-label="Search">
-        <i class="fas fa-search" aria-hidden="true"></i>
+    <form  method="post">
+    {% csrf_token %}
+{#        <input name="search" type="search" placeholder="Search NID">#}
+        <input name="s1" type="search" placeholder="name" >
+{#        <i class="fas fa-search" aria-hidden="true"></i>#}
+        <button name="search" class="btn btn-success" type="submit">Search</button>
     </form>
+{#    {% for i in p %}#}
+{#        <p>{{ i.nid }}</p>#}
+{#    {% endfor %}#}
 
 {% endblock %}
 
