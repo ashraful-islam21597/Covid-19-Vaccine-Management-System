@@ -29,13 +29,9 @@ def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
     result = BytesIO()
-    #p = canvas.Canvas(result)
+
     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
-    # p.drawString(100, 100, "Hello world.")
-    # p.showPage()
-    # p.save()
-    # result.seek(0)
-    #pdf.drawString(100, 100, "Hello world.")
+
     if not pdf.err:
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
@@ -52,12 +48,6 @@ class PdfDownload(DetailView):
         html = template.render(context)
 
         pdf = render_to_pdf('vaccine_card.html', context)
-        # p = canvas.Canvas(pdf)
-        # p.drawString(100, 100)
-        # p.showPage()
-        # p.save()
-
-
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Vaccine_card_%s.pdf" % ("12341231")
