@@ -3,10 +3,7 @@ import math
 import io
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import FileResponse
-from django.template.loader import get_template
-from reportlab.pdfgen import canvas
-from twilio.rest import Client
+
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
