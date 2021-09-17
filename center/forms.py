@@ -14,10 +14,12 @@ from crispy_forms.layout import (
 class DateInput(forms.DateInput):
     input_type = 'date'
 
+
 class centerform(forms.ModelForm):
     class Meta:
         model = center_name
         fields = ('name',  'working_time')
         widgets = {
             'working_time': DateInput(),
+
         }

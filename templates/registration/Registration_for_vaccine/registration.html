@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="col-12">
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Enter Your NID</label>
+                <input type="text" class="form-control" autocomplete="off" required name="nid" id="inputEmail4" placeholder="NID">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputEmail4">Phone Number</label>
+                <input type="text" class="form-control" autocomplete="off" required name="phone" id="inputEmail4" placeholder="Phone">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputState">center</label>
+                <select id="inputState" name="center" class="form-control">
+                    <option selected>Center..</option>
+                    {% for center in obj %}
+                        {% if center.status == True %}
+                            <option value="{{ center }}">{{ center.name }}</option>
+                        {% else %}
+                            {% if center.updtated_dosses != 0 %}
+                                <option value="{{ center }}">{{ center.name }}</option>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </select>
+            </div>
+            <div style="margin-left: 20px;" class="form-group">
+                <button type="submit" name="submit" class="btn btn-primary">Register</button>
+            </div>
+
+
+        </div>
+
+
+    </form>
+{% endblock content %}

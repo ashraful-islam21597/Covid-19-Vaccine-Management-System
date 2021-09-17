@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 
-from center.models import center_name, period_of_dosses, area
+from center.models import center_name,schedule, area
 
 
 admin.site.register(center_name)
-admin.site.register(period_of_dosses)
+admin.site.register(schedule)
 

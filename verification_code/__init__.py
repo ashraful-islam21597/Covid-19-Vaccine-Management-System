@@ -1,0 +1,1 @@
+default_app_config="verification_code.apps.VerificationCodeConfig"

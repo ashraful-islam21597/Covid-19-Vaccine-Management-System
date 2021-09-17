@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <h3 style="text-align: center">List Of All Area</h3>
+    <hr>
+    {% if user.is_superuser %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group col-md-4">
+
+            <select id="inputState" name="name"  class="form-control">
+                <option selected>Thana</option>
+                {% for i in y1 %}
+                        <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+            </select>
+
+        </div>
+        <div class="form-group col-md-4">
+
+            <input type="number" class="form-control" name="population" id="inputEmail4" placeholder="Population">
+
+        </div>
+        <button class="btn btn-success" style="margin-left: 20px;" name="submit" type="submit">Submit</button>
+{#        <input name="name" placeholder="Area Name" type="text">#}
+{#        <input name="population" class="form-control" placeholder="Population" type="number">#}
+
+
+
+    </form>
+        <hr>
+    {% endif %}
+
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Population</th>
+            <th scope="col">Total doss</th>
+            <th scope="col">Pending doss</th>
+            <th scope="col">Total Registered</th>
+            <th scope="col">Total Vaccinate</th>
+            <th scope="col">Centers</th>
+            <th scope="col">Is working</th>
+            <th scope="col">Priority</th>
+            {% if user.is_superuser %}
+            <th scope="col">#</th>
+            {% endif %}
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for obj in a2 %}
+            {% if user.is_authenticated %}
+                <tr>
+                    <td><a href="{% url 'create_center' obj.pk %}">{{ obj.name }}</a></td>
+                    <td>{{ obj.population }}</td>
+                    <td>{{ obj.total_doss_area }}</td>
+                    <td>{{ obj.pending_doss }}</td>
+                    <td>{{ obj.total_rgistered }}</td>
+                    <td>{{ obj.total_vaccinated }}</td>
+                    <td>{{ obj.number_of_center }}</td>
+                    <td>{{ obj.enability }}</td>
+                    <td>{{ obj.priority }}%</td>
+                    {% if user.is_superuser %}
+                    <td><a href="{% url 'delete_area' obj.pk %}">Delete</a></td>
+                    {% endif %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+</body>
+</html>

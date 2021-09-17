@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import django_heroku
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import City.apps
@@ -37,7 +40,8 @@ INSTALLED_APPS = [
     'center',
     'citizen',
     'staff',
-
+    'home',
+    'verification_code',
     'City.apps.CityConfig',
     'crispy_forms',
     'django.contrib.admin',
@@ -46,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +90,7 @@ WSGI_APPLICATION = 'vaxine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'PVMS22',
+        'NAME': 'PVMS25',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': 'localhost',
@@ -129,6 +134,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
+MEDIA_ROOT = 'C:\\Users\\USER\\Desktop\\covid_vaxine\\vaxine\\media'
+MEDIA_URL = 'media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
@@ -156,4 +163,9 @@ CRISPY_CLASS_CONVERTERS = {
 # EMAIL_USE_SSL = False
 
 
+cloudinary.config(
+    cloud_name = "dzy9qbz8m",
+    api_key = "221514387314271",
+    api_secret = "QNBp4ZtPoN-LHtcriYb3-I5jIVc"
+)
 django_heroku.settings(locals())

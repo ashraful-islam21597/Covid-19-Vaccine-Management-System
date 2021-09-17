@@ -1,0 +1,46 @@
+
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+{#    <div style="align-content: center;margin-left:10%;" class="row">#}
+{#        <div class="col-sm-6">#}
+{#            <div class="card">#}
+{##}
+{#                <div class="card-body">#}
+{#                    <h5 class="card-title">We can not inform you about the schedule right now!!</h5>#}
+{#                    <p class="card-text">Your registration has been completed but but vaacines are not available in your selected center right now. That's why we can not inform about your schedule.You can cancel your registration and select another center, or you can keep your registration in this center. We will notify you via SMS as soon as we get the vaccine at the center. Thank you.</p>#}
+{#                    <a href="{% url 'cancel' p.pk %}" class="btn btn-primary">Cancel Registration</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#    </div>#}
+{##}
+{#    <div class="card w-75">#}
+{#        <div class="card-body">#}
+{#            <h5 class="card-title">Card title</h5>#}
+{#            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>#}
+{#            <a href="#" class="btn btn-primary">Button</a>#}
+{#        </div>#}
+{#    </div>#}
+
+    <div class="card w-50 col-12">
+        <div class="card-body">
+            <h5 class="card-title">We can not inform you about the schedule right now!!</h5>
+            <p class="card-text">Your registration has been completed but but vaacines are not available in your selected center right now. That's why we can not inform about your schedule.You can cancel your registration and select another center, or you can keep your registration in this center. We will notify you via SMS as soon as we get the vaccine at the center. Thank you.</p>
+            <form method="post">
+                {% csrf_token %}
+            <button type="submit" name="submit" value="{{ p.pk }}" class="btn btn-primary">Cancel Registration</button>
+                <button type="submit" name="NO" value="{{ p.pk }}" class="btn btn-primary">No</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>

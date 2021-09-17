@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    {% if object.registered == False %}
+
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </symbol>
+        </svg>
+        <div class="alert alert-primary d-flex align-items-center" role="alert">
+
+            <div>
+                <svg style="margin-right: 10px;" class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                Your registration has been completed but but vaacines are not available in your selected center right now.
+                That's why we can not inform about your schedule.You can cancel your registration and select another center, or you can keep your registration in this center.
+                We will notify you via SMS as soon as we get the vaccine at the center.
+
+
+                <form style="float:right;margin-right:55%;height:5%;" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="submit" value="{{ object.pk }}" class="btn btn-outline-primary ml-2">Cancel Registration</button>
+                </form>
+            </div>
+
+
+        </div>
+
+        <hr>
+
+
+        {% endif %}
+{#    <div>#}
+{#        #}
+{#        <p>Your registration has been completed but but vaacines are not available in your selected center right now. That's why we can not inform about your schedule.You can cancel your registration and select another center, or you can keep your registration in this center.#}
+{#            We will notify you via SMS as soon as we get the vaccine at the center.</p>#}
+{#    {% endif %}</div>#}
+
+    <a href="{% url 'download' object.pk %}" class="btn btn-outline-primary ml-2">
+        Download</a>
+
+    <h1 style="text-align:center;">Registration Card</h1>
+    <br>
+    <table>
+    <tr>
+        <td><b>NID</b>     </td>
+        <td>   :   {{ object.nid }}</td>
+    </tr>
+        <tr>
+            <td><b>Contact  </b></td>
+            <td>     :   {{ object.contact }}</td>
+        </tr>
+        <tr>
+            <td><b>Center  </b></td>
+            <td>    :{{ object.center.name }}</td>
+        </tr>
+    </table>
+    <hr>
+{#    <p> NID : {{ object.nid }}</p>#}
+{#    <p style="font-size: 15px;"> Contact :{{ object.contact }}</p>#}
+{#    <p> Center :{{ object.center.name }}</p>#}
+
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Period</th>
+            <th scope="col">Slot</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">First Doss</th>
+            <td>{{ object.period.slot }}</td>
+            <td>{{ object.period.date }}</td>
+            <td>{{ object.period.sttime }} am - {{ object.period.etime }}am</td>
+            {% if object.doss_1st %}
+                <td> Done</td>
+            {% else %}
+                <td> Pending</td>
+            {% endif %}
+
+        </tr>
+        <tr>
+            <th scope="row">Second Doss</th>
+            <td>{{ object.period.slot }}</td>
+            <td>{{ object.period.second_date }}</td>
+            <td>{{ object.period.sttime }} am - {{ object.period.etime }}am</td>
+            {% if object.doss_1st == True %}
+                <td> Done</td>
+            {% else %}
+                <td> Pending</td>
+            {% endif %}
+        </tr>
+
+        </tbody>
+    </table>
+
+{% endblock content %}

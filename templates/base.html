@@ -4,84 +4,183 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Vaccine Management</title>
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">#}
+
+
+
+
+
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">#}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .nav-link{
+            color: white;
+            text-emphasis-color: white;
+        }
+        .nav-link:hover{
+            color: white;
+
+        }
+
+
+
+
+
+    </style>
 </head>
 <body>
-<nav style="background-color:darkslategrey" class="navbar sticky-top navbar-expand-md navbar-dark  mb-4">
-    <a class="navbar-brand" href="{% url 'home' %}">Public Vaccine Management System</a>
+
+
+<ul style="background-color:#6495ED;border: none;" class="nav nav-tabs" id="myTab" role="tablist">
+
+
+    <li class="nav-item;">
+        <a  class="nav-link data-toggle {% if request.resolver_match.url_name == 'homepage' %}active{% endif %}"
+            href="{% url 'homepage' %}" >home</a>
+    </li>
+
     {% if user.is_authenticated %}
-        <ul class="navbar-nav mr-auto">
-            {% if user.is_superuser %}
-                <a href="{% url 'signup' %}" class="btn btn-outline-primary ml-2">
-                    Create staff</a>
-                <a href="{% url 'staff' %}" class="btn btn-outline-primary ml-2">
-                    see stafflist</a>
-                <a href="{% url 'update_doss' %}" class="btn btn-outline-primary ml-2">
-                    Update doss</a>
+
+        {% if user.is_superuser %}
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'signup' %}active{% endif %}"
+                   href="{% url 'signup' %}">Create staff</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'staff' %}active{% endif %}"
+                   href="{% url 'staff' %}">staffs</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'update_doss' %}active{% endif %}"
+                   href="{% url 'update_doss' %}"> update</a>
+            </li>
+            <li class="nav-item">
+
+                <a class="nav-link {% if request.resolver_match.url_name == 'arealist' %}active{% endif %}"
+                   href="{% url 'arealist' %}">Area List</a>
+            </li>
+        {% elif user.is_cnter_staff %}
+            <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'vaccinate' %}active{% endif %}"
+                   href="{% url 'vaccinate' %}">Vaccination</a>
+            </li>
+        {% elif user.is_area_manager %}
+            <li class="nav-item">
+
+                <a class="nav-link {% if request.resolver_match.url_name == 'arealist' %}active{% endif %}"
+                   href="{% url 'arealist' %}">Area List</a>
+            </li>
 
 
-            {% elif user.is_cnter_staff %}
-                <a href="{% url 'vaccinate' %}" class="btn btn-outline-primary ml-2">
-                    Vaccinate</a>
-            {% elif user.is_area_manager %}
-            <a href="{% url 'arealist' %}" class="btn btn-outline-primary ml-2">
-                Area Details</a>
-
-            {% endif %}
-
-
-
-        </ul>
-        {% else %}
-
-    <a href="{% url 'check_status' %}" class="btn btn-outline-primary ml-2">
-        status</a>
-    <a href="{% url 'download' %}" class="btn btn-outline-primary ml-2">
-        Download Vaccine Card</a>
-    {% endif %}
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        {% if user.is_authenticated %}
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link dropdown-toggle" href="#" id="userMenu"
-                       data-toggle="dropdown" aria-haspopup="true"
-                       aria-expanded="false">
-                        {{ user.Fullname }}
-
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right"
-                         aria-labelledby="userMenu">
-                        <a class="dropdown-item"
-                           href="{% url 'password_reset' %}">Change password</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
-                    </div>
-                </li>
-            </ul>
-        {% else %}
-            <form class="form-inline ml-auto">
-                <a href="{% url 'login' %}" class="btn btn-outline-secondary">
-                    Log In as staff</a>
-            </form>
         {% endif %}
+    {% else %}
 
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'check_status' %}active{% endif %}"
+              data-display-toggle="tab" href="{% url 'check_status' %}">status</a>
+        </li>
+        <li class="nav-item">
+            <a  class="nav-link  {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                href="{% url 'home' %}">Registration</a>
+        </li>
+        <li class="nav-item">
+            <a  class="nav-link  {% if request.resolver_match.url_name == 'download' %}active{% endif %}"
+                href="{% url 'download' %}">download</a>
+        </li>
+
+
+    {% endif %}
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+           aria-expanded="false">Adminastration</a>
+        <div class="dropdown-menu" >
+            {% if user.is_authenticated %}
+
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                <a class="dropdown-item" href="{% url 'password_reset' %}">Change Password</a>
+            {% else %}
+                <a class="dropdown-item" href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
+
+    </li>
+
+
+
+</ul>
+
+
+
+{#<div class="btn-group col-12" role="group" aria-label="Button group with nested dropdown">#}
+{#    <button type="button" class="btn btn-primary">Home</button>#}
+{#    <button type="button" class="btn btn-primary">Registration</button>#}
+{#    <button type="button" class="btn btn-primary">2</button>#}
+{#    <button type="button" class="btn btn-primary">2</button>#}
+{#    <button type="button" class="btn btn-primary">2</button>#}
+{##}
+{#    <div class="btn-group" role="group">#}
+{#        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#            Dropdown#}
+{#        </button>#}
+{#        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">#}
+{#            <li><a class="dropdown-item" href="#">Dropdown link</a></li>#}
+{#            <li><a class="dropdown-item" href="#">Dropdown link</a></li>#}
+{#        </ul>#}
+{#    </div>#}
+{#</div>#}
+
+<div class="tab-content" id="myTabContent">
+
+
+    <div style="background-color:AliceBlue;margin-top: 30px;padding:20px;" class="container">
+
+        {% block content %}
+
+        {% endblock %}
     </div>
-
-</nav>
-<div style="background-color: aliceblue;padding:20px;" class="container">
-
-
-    {% block content %}
-
-    {% endblock content %}
 </div>
 
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("mynav");
+        if (x.className === "nav-tabs") {
+            x.className += " responsive";
+        } else {
+            x.className = "nav-tabs";
+        }
+    }
+</script>
+<!--bootstrap-->
+{#<script>#}
+{#    function myFunction() {#}
+{#        var x = document.getElementById("myTab");#}
+{#        if (x.className === "topnav") {#}
+{#            x.className += " responsive";#}
+{#        } else {#}
+{#            x.className = "topnav";#}
+{#        }#}
+{#    }#}
+{#</script>#}
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -92,5 +191,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+{#<script type="text/javascript">#}
+{##}
+{#    $('#myTab a[href="#profile"]').tab('show') // Select tab by name#}
+{#    $('#myTab li:first-child a').tab('show') // Select first tab#}
+{#    $('#myTab li:last-child a').tab('show') // Select last tab#}
+{#    $('#myTab li:nth-child(3) a').tab('show') // Select third tab#}
+{#</script>#}
+
+
 </body>
 </html>

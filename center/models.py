@@ -24,12 +24,13 @@ class center_name(models.Model):
     working_time = models.DateField(auto_now_add=False)
     pending_doss_center = models.IntegerField(default=0)
     total_doss_center = models.IntegerField(default=0)
+    status=models.BooleanField(default=1)
 
     def __str__(self):
         return self.name
 
 
-class period_of_dosses(models.Model):
+class schedule(models.Model):
     center_name = models.ManyToManyField(center_name)
     slot = models.CharField(max_length=2)
     target_user = models.IntegerField(default=2)

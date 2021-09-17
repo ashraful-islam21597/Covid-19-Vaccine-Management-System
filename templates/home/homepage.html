@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load cloudinary %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card" style="width: 25rem;margin-left:10%;">
+                        <div class="card-header">
+                            <h5 class="card-title">Bangladesh</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>Total Deaths  :  </span> {{ context1.deaths }}</li>
+                            <li class="list-group-item">Today's Death : {{ context1.todayDeaths }}</li>
+                            <li class="list-group-item">Total Casses :{{ context1.cases }}</li>
+                            <li class="list-group-item">Today's Cases : {{ context1.todayCases }}</li>
+                            <li class="list-group-item">Recovered : {{ context1.recovered }}</li>
+                            <li class="list-group-item">Total tests : {{ context1.tests }}</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="card" style="width: 25rem;margin-left:10%;">
+                        <div class="card-header">
+                            <h5 class="card-title">World</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><span>Total Deaths  :  </span> {{ context.deaths }}</li>
+                            <li class="list-group-item">Today's Death : {{ context.todayDeaths }}</li>
+                            <li class="list-group-item">Total Casses :{{ context.cases }}</li>
+                            <li class="list-group-item">Today's Cases : {{ context.todayCases }}</li>
+                            <li class="list-group-item">recovered : {{ context.recovered }}</li>
+                            <li class="list-group-item">Affected Countries : {{ context.affectedCountries }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

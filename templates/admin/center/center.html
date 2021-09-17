@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    {% if user.is_cnter_staff %}
+    <h3 style="text-align: center">{{ u1.staff.name }}</h3>
+        <hr>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="col-12">
+            <div class="form-group col-md-6">
+                {#                <label for="inputEmail4">Enter your NID</label>#}
+                <input type="search" class="form-control" autocomplete="off" required name="s1" id="inputEmail4"
+                       placeholder="Enter NID">
+            </div>
+
+
+            <div style="margin-left: 20px;" class="form-group">
+                <button type="submit" name="search" class="btn btn-primary">Submit</button>
+            </div>
+
+
+        </div>
+
+
+        {#        <input name="s1" type="search" placeholder="Enter Your NID" >#}
+        {#        <i class="fas fa-search" aria-hidden="true"></i>#}
+        {#        <button name="search" class="btn btn-success" type="submit">Search</button>#}
+    </form>
+
+
+{% endblock %}
+
+</body>
+</html>

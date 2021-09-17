@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% crispy example_form %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+    <h1>{{ obj.name }}</h1>
+    <hr>
+    <div>
+
+        <form class="crispy-form" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-success" type="submit">Submit</button>
+        </form>
+    </div>
+    <hr>
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Center Name</th>
+            <th scope="col">Pending doss</th>
+            <th scope="col">Updated Dosses</th>
+            <th scope="col">Available Dosses</th>
+            <th scope="col">Doss Per Day</th>
+            <th>#</th>
+
+            <th>#</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in obj.center_name_set.all %}
+
+            <tr>
+
+                <td>{{ i.name }}</td>
+                <td>{{ i.pending_doss_center }}</td>
+                <td>{{ i.updated_dosses }}</td>
+                <td>{{ i.available_dosses }}</td>
+                <td>{{ i.doss_per_day }}</td>
+                <td><a href="{% url 'edit_center' i.pk %}">Enable/Disable</a></td>
+{#                <td><a href="{% url 'delete_center' i.pk %}">Delete</a></td>#}
+                <td><a href="{% url 'create_center_staff' i.pk %}">create staff</a></td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}
+</body>
+</html>
